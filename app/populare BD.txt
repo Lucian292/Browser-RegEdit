@@ -1,0 +1,37 @@
+--script creare tabele
+CREATE TABLE keys (
+    key_id SERIAL PRIMARY KEY,
+    parent_key_id INTEGER,
+    key_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE values (
+    value_id SERIAL PRIMARY KEY,
+    key_id INTEGER REFERENCES keys(key_id) ON DELETE CASCADE,
+    value_name VARCHAR(255) NOT NULL,
+    value_type VARCHAR(20) NOT NULL,
+    value_data TEXT
+);
+
+-- Inserare date în tabela 'keys'
+INSERT INTO keys (parent_key_id, key_name) VALUES
+  (NULL, 'HKEY_LOCAL_MACHINE'),
+  (1, 'SOFTWARE'),
+  (2, 'Microsoft'),
+  (3, 'Windows'),
+  (4, 'CurrentVersion');
+
+-- Inserare date în tabela 'values'
+INSERT INTO values (key_id, value_name, value_type, value_data) VALUES
+  (1, 'ComputerName', 'String', 'MyComputer'),
+  (1, 'OSVersion', 'String', 'Windows 10'),
+  (2, 'Program1', 'String', 'Application 1'),
+  (2, 'Program2', 'String', 'Application 2'),
+  (3, 'Version', 'String', '10.0.19043'),
+  (3, 'InstallDate', 'String', '2023-01-01');
+  (4, 'Program3', 'String', 'Application 3'),
+  (4, 'Program4', 'String', 'Application 4'),
+  (4, 'Program5', 'String', 'Application 5'),
+  (1, 'Program6', 'String', 'Application 6'),
+  (2, 'Program7', 'String', 'Application 7'),
+  (3, 'Program8', 'String', 'Application 8');
