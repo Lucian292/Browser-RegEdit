@@ -3,38 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/style.css">
-    <title>RegEdit Web</title>
+    <title>Tree View</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="panel-left">
-            <ul>
-                {% for key in keys %}
-                    <li>
-                        {{ key.key_name }}
-                        {% if key.children %}
-                            <ul>
-                                {% for child_key in key.children %}
-                                    <li>{{ child_key.key_name }}</li>
-                                    <!-- Puteți continua structura pentru a afișa și copiii copiilor -->
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="panel-right">
-            <ul>
-                {% for key in keys %}
-                    <li>{{ key.key_name }}</li>
-                    <!-- Implementați lista cu chei și valorile lor -->
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</body>
 
+{% macro render_tree(node) %}
+    <ul>
+        <li data-key-id="{{ node.key_id }}" onclick="toggleNode(event, this)">{{ node.key_name }}
+            {% if node.children %}
+                <ul style="display:none;">
+                    {% for child in node.children %}
+                        {{ render_tree(child) }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    </ul>
+{% endmacro %}
+
+{% for root_key in keys %}
+    {{ render_tree(root_key) }}
+{% endfor %}
+
+<script>
+    function toggleNode(event, node, keyId) {
+        var childUl = node.querySelector('ul');
+        if (childUl) {
+            childUl.style.display = (childUl.style.display === 'none') ? 'block' : 'none';
+            event.stopPropagation();
+        } else {
+            // Dacă nodul nu are sub-meniu (este frunză), facem un request către ruta /get_key_values/<keyId>
+            fetch(`/get_values/${keyId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Manipulăm răspunsul și afișăm valorile în partea dreaptă a paginii
+                    var valuesContainer = document.getElementById('values-container');
+                    valuesContainer.innerHTML = ""; // Curățăm containerul
+
+                    if (data.error) {
+                        valuesContainer.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        data.values.forEach(value => {
+                            valuesContainer.innerHTML += `<p>Name: ${value.name} Type: ${value.type} Data: ${value.data}</p>`;
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        // Adaugă o solicitare AJAX pentru a obține și afișa valorile asociate nodului frunză
+        if (node.children.length === 0) {
+            var key_Id = node.getAttribute('data-key-id');
+            getValues(key_Id);
+        }
+    }
+
+    function getValues(keyId) {
+        // Folosește AJAX pentru a obține valorile asociate unui nod frunză
+        fetch('/get_values/' + keyId)
+            .then(response => response.json())
+            .then(data => displayValues(data));
+    }
+
+    function displayValues(values) {
+        var valuesContainer = document.getElementById('values-container');
+        valuesContainer.innerHTML = ''; // Curăță conținutul anterior
+
+        values.forEach(function(value) {
+            var valueDiv = document.createElement('div');
+            valueDiv.innerHTML = '<strong>Name:</strong> ' + value.name + '<br>' +
+                                 '<strong>Type:</strong> ' + value.type + '<br>' +
+                                 '<strong>Data:</strong> ' + value.data + '<br><br>';
+            valuesContainer.appendChild(valueDiv);
+        });
+    }
+</script>
+
+<!-- Partea dreaptă: Valorile asociate nodului selectat -->
+<div style="float: left; width: 70%;">
+    <div id="values-container">
+        <!-- Valorile vor fi afișate aici -->
+    </div>
+</div>
+
+</body>
 </html>

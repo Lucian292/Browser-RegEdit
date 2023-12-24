@@ -1,18 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
+from app import db
 
-db = SQLAlchemy()
-
-
-class Key(db.Model):
-    __tablename__ = 'keys'
+class Keys(db.Model):
     key_id = db.Column(db.Integer, primary_key=True)
-    parent_key_id = db.Column(db.Integer, db.ForeignKey('keys.key_id', ondelete='CASCADE'))
+    parent_key_id = db.Column(db.Integer)
     key_name = db.Column(db.String(255), nullable=False)
-    values = db.relationship('Value', backref='key', lazy=True)
+    values = db.relationship('Values', backref='key', cascade='all, delete-orphan')
 
-
-class Value(db.Model):
-    __tablename__ = 'values'
+class Values(db.Model):
     value_id = db.Column(db.Integer, primary_key=True)
     key_id = db.Column(db.Integer, db.ForeignKey('keys.key_id', ondelete='CASCADE'), nullable=False)
     value_name = db.Column(db.String(255), nullable=False)

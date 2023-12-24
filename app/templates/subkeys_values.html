@@ -1,0 +1,13 @@
+<ul>
+    {% for subkey in subkeys %}
+        <li class="registry-key" data-key-id="{{ subkey.key_id }}">
+            {{ subkey.key_name }}
+        </li>
+    {% endfor %}
+</ul>
+
+{% for value in values %}
+    <div class="registry-value">
+        Name: {{ value.value_name }} Type: {{ value.value_type }} Data: {{ value.value_data }}
+    </div>
+{% endfor %}
