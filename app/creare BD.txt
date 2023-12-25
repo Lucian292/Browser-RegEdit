@@ -1,0 +1,14 @@
+--script creare tabele
+CREATE TABLE keys (
+    key_id SERIAL PRIMARY KEY,
+    parent_key_id INTEGER,
+    key_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE values (
+    value_id SERIAL PRIMARY KEY,
+    key_id INTEGER REFERENCES keys(key_id) ON DELETE CASCADE,
+    value_name VARCHAR(255) NOT NULL,
+    value_type VARCHAR(20) NOT NULL,
+    value_data TEXT
+);

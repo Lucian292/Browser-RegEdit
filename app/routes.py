@@ -1,6 +1,4 @@
-from flask import render_template, request, jsonify
-from app import app, db
-from app.models import Keys, Values
+from flask import request
 from flask import render_template
 from app import app, db
 from app.models import Keys, Values
