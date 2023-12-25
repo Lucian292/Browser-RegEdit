@@ -27,7 +27,7 @@
     <ul>
         <li data-key-id="{{ node.key_id }}" onclick="toggleNode(event, this)">
             {{ node.key_name }}
-            <button onclick="editNode(event, {{ node.key_id }})">Edit</button>
+            <button onclick="editNode(event, {{ node.key_id }}, {{ node.parent_key_id }})">Edit</button>
             <button onclick="deleteNode(event, {{ node.key_id }})">Delete</button>
             <button onclick="createChild(event, {{ node.key_id }})">Create Child</button>
             {% if node.children %}
@@ -49,6 +49,8 @@
     function toggleNode(event, node) {
         var childUl = node.querySelector('ul');
         var keyId = node.getAttribute('data-key-id');
+        //var parentKeyId = node.parentNode.parentNode.getAttribute('data-key-id'); // Adaugă această linie pentru a obține ID-ul nodului părinte
+
 
         if (childUl) {
             childUl.style.display = (childUl.style.display === 'none') ? 'block' : 'none';
@@ -100,17 +102,17 @@
 
 
     // Funcționalitate pentru editarea unui nod din arbore
-    function editNode(event, keyId) {
+    function editNode(event, keyId, parentKeyId) {
         event.stopPropagation();
         var nodeName = prompt('Enter the new name for the node:');
         if (nodeName !== null) {
-            // Trimite datele actualizate la server
+            // Trimite datele actualizate la server, inclusiv ID-ul nodului părinte
             fetch('/update_node/' + keyId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name: nodeName }),
+                body: JSON.stringify({ name: nodeName, parent_key_id: parentKeyId }),
             })
             .then(response => response.json())
             .then(result => {
@@ -123,6 +125,7 @@
             });
         }
     }
+
 
     // Funcționalitate pentru ștergerea unui nod din arbore
     function deleteNode(event, keyId) {
@@ -271,7 +274,16 @@
         <input type="text" id="new-value-name">
 
         <label for="new-value-type">Type:</label>
-        <input type="text" id="new-value-type">
+        <select id="new-value-type">
+            <!-- Adăugați opțiunile aici, folosind o buclă sau manual -->
+            <option value="REG_BINARY">REG_BINARY</option>
+            <option value="REG_DWORD">REG_DWORD</option>
+            <option value="REG_QWORD">REG_QWORD</option>
+            <option value="REG_EXPAND_SZ">REG_EXPAND_SZ</option>
+            <option value="REG_MULTI_SZ">REG_MULTI_SZ</option>
+            <option value="REG_SZ">REG_SZ</option>
+            <!-- Adăugați altele după nevoie -->
+        </select>
 
         <label for="new-value-data">Data:</label>
         <input type="text" id="new-value-data">
@@ -287,7 +299,16 @@
             <input type="text" id="edit-value-name">
 
             <label for="edit-value-type">Type:</label>
-            <input type="text" id="edit-value-type">
+            <select id="edit-value-type">
+                <!-- Adăugați opțiunile aici, folosind o buclă sau manual -->
+                <option value="REG_BINARY">REG_BINARY</option>
+                <option value="REG_DWORD">REG_DWORD</option>
+                <option value="REG_QWORD">REG_QWORD</option>
+                <option value="REG_EXPAND_SZ">REG_EXPAND_SZ</option>
+                <option value="REG_MULTI_SZ">REG_MULTI_SZ</option>
+                <option value="REG_SZ">REG_SZ</option>
+                <!-- Adăugați altele după nevoie -->
+            </select>
 
             <label for="edit-value-data">Data:</label>
             <input type="text" id="edit-value-data">

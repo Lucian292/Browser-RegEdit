@@ -9,4 +9,4 @@ app = Flask(__name__)
 app.config.from_pyfile(os.path.join(basedir, 'config.py'))
 db = SQLAlchemy(app)
 
-from app import routes, models
+from app import routes, models, validators
