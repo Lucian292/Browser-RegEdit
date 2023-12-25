@@ -76,15 +76,16 @@
 
         values.forEach(function(value) {
             var valueDiv = document.createElement('div');
-            var valueId = value.id; // Obține id-ul valorii
-            valueDiv.dataset.valueId = valueId; // Adaugă id-ul ca atribut de date
+            // Adaugă atributul de date pentru valueId (nu va fi vizibil în pagină)
+            valueDiv.dataset.valueId = value.valueId;
 
+            // Adaugă id-ul într-un atribut invizibil pentru a fi folosit în funcțiile delete și edit
             valueDiv.innerHTML = '<strong>Name:</strong> ' + value.name + '<br>' +
                                  '<strong>Type:</strong> ' + value.type + '<br>' +
                                  '<strong>Data:</strong> ' + value.data + '<br>';
             // Adăugăm butoanele de edit și delete în containerul de valori
-            valueDiv.innerHTML += '<button onclick="editValue(' + valueId + ')">Edit</button>';
-            valueDiv.innerHTML += '<button onclick="deleteValue(' + valueId + ')">Delete</button>';
+            valueDiv.innerHTML += '<button onclick="editValue(' + value.valueId + ')">Edit</button>';
+            valueDiv.innerHTML += '<button onclick="deleteValue(' + value.valueId + ')">Delete</button>';
             valueDiv.innerHTML += '<br><br>';
             valuesContainer.appendChild(valueDiv);
         });
@@ -94,6 +95,7 @@
         // Ascunde formularul de editare
         document.getElementById('edit-form').style.display = 'none';
     }
+
 
 
 
@@ -185,24 +187,25 @@
     }
 
     // Funcționalitate pentru ștergerea unei valori
-    function deleteValue(value) {
+    function deleteValue(valueId) {
         var confirmDelete = confirm('Are you sure you want to delete this value?');
         if (confirmDelete) {
             // Trimite cererea de ștergere la server
-            fetch('/delete_value/' + value.id, {
+            fetch('/delete_value/' + valueId, {
                 method: 'DELETE',
             })
             .then(response => response.json())
             .then(result => {
                 alert(result.message);
-                // Elimină valorile după ștergerea valorii
-                document.querySelector(`[data-value-id="${value.id}"]`).remove();
+                // Elimină valoarea din pagina web după ștergerea acesteia
+                document.querySelector(`[data-value-id="${valueId}"]`).remove();
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
         }
     }
+
 
     // Funcționalitate pentru crearea unei valori noi
     function createValue() {

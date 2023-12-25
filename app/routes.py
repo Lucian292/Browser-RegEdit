@@ -50,8 +50,12 @@ from flask import jsonify
 @app.route('/get_values/<int:key_id>', methods=['GET'])
 def get_values(key_id):
     values = Values.query.filter_by(key_id=key_id).all()
-    values_data = [{'name': value.value_name, 'type': value.value_type, 'data': value.value_data} for value in values]
-    print("sa efectuat get_values cu id-ul ", {key_id}, "s-au returnat valorile ", values_data)
+    values_data = [{
+        'name': value.value_name,
+        'type': value.value_type,
+        'data': value.value_data,
+        'valueId': value.value_id} for value in values]
+    #print("sa efectuat get_values cu id-ul ", {key_id}, "s-au returnat valorile ", values_data)
     return jsonify(values_data)
 
 @app.route('/create_key', methods=['POST'])
