@@ -51,4 +51,18 @@ from flask import jsonify
 def get_values(key_id):
     values = Values.query.filter_by(key_id=key_id).all()
     values_data = [{'name': value.value_name, 'type': value.value_type, 'data': value.value_data} for value in values]
+    print("sa efectuat get_values cu id-ul ", {key_id}, "s-au returnat valorile ", values_data)
     return jsonify(values_data)
+
+@app.route('/create_value/<int:key_id>', methods=['POST'])
+def create_value(key_id):
+    data = request.get_json()
+    value_name = data['name']
+    value_type = data['type']
+    value_data = data['data']
+
+    new_value = Values(key_id=key_id, value_name=value_name, value_type=value_type, value_data=value_data)
+    db.session.add(new_value)
+    db.session.commit()
+
+    return jsonify({"message": "Value created successfully"})

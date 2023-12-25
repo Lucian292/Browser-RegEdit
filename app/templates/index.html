@@ -37,34 +37,24 @@
 {% endfor %}
 
 <script>
-    function toggleNode(event, node, keyId) {
+    function toggleNode(event, node) {
         var childUl = node.querySelector('ul');
+        var keyId = node.getAttribute('data-key-id');
+
         if (childUl) {
             childUl.style.display = (childUl.style.display === 'none') ? 'block' : 'none';
+            getValues(keyId);
             event.stopPropagation();
-        } else {
-            // Dacă nodul nu are sub-meniu (este frunză), facem un request către ruta /get_key_values/<keyId>
-            fetch(`/get_values/${keyId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Manipulăm răspunsul și afișăm valorile în partea dreaptă a paginii
-                    var valuesContainer = document.getElementById('values-container');
-                    valuesContainer.innerHTML = ""; // Curățăm containerul
 
-                    if (data.error) {
-                        valuesContainer.innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        data.values.forEach(value => {
-                            valuesContainer.innerHTML += `<p>Name: ${value.name} Type: ${value.type} Data: ${value.data}</p>`;
-                        });
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-        // Adaugă o solicitare AJAX pentru a obține și afișa valorile asociate nodului frunză
-        if (node.children.length === 0) {
-            var key_Id = node.getAttribute('data-key-id');
-            getValues(key_Id);
+        } else {
+            // Dacă nodul nu are sub-meniu (este nod frunză sau intermediar), facem un request către ruta /get_values/<keyId>
+            var keyId = node.getAttribute('data-key-id');
+            if (!keyId) {
+                keyId = node.parentElement.getAttribute('data-key-id');
+            }
+            getValues(keyId);
+            event.stopPropagation();
+
         }
     }
 
@@ -87,12 +77,66 @@
             valuesContainer.appendChild(valueDiv);
         });
     }
+
+function createNewRegister() {
+        // Afișează formularul de creare a noului element Value
+        document.getElementById('create-form').style.display = 'block';
+    }
+
+    function submitNewRegister() {
+        // Obține key_id-ul nodului selectat
+        var selectedNode = document.querySelector('.selected-node');
+        var keyId = selectedNode.getAttribute('data-key-id');
+
+        // Obține valorile introduse de utilizator în formular
+        var name = document.getElementById('value-name').value;
+        var type = document.getElementById('value-type').value;
+        var data = document.getElementById('value-data').value;
+
+        // Trimite datele la server pentru a crea noul element Values
+        var dataToSend = {
+            name: name,
+            type: type,
+            data: data
+        };
+
+        fetch('/create_value/' + keyId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend),
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(result.message);
+            // Ascunde formularul după adăugarea unui nou element
+            document.getElementById('create-form').style.display = 'none';
+            // Reafișează valorile după adăugarea unui nou element
+            getValues(keyId);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
 </script>
 
-<!-- Partea dreaptă: Valorile asociate nodului selectat -->
+<!-- Partea dreaptă: Valorile asociate nodului selectat și butonul "Create New Register" -->
 <div style="float: left; width: 70%;">
     <div id="values-container">
         <!-- Valorile vor fi afișate aici -->
+    </div>
+    <div id="create-form" style="display: none;">
+        <label for="value-name">Name:</label>
+        <input type="text" id="value-name">
+
+        <label for="value-type">Type:</label>
+        <input type="text" id="value-type">
+
+        <label for="value-data">Data:</label>
+        <input type="text" id="value-data">
+
+        <button onclick="submitNewRegister()">Submit</button>
     </div>
 </div>
 
