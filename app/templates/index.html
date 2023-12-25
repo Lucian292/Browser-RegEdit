@@ -64,21 +64,27 @@
         // Folosește AJAX pentru a obține valorile asociate unui nod
         fetch('/get_values/' + keyId)
             .then(response => response.json())
-            .then(data => displayValues(data));
+            .then(data => displayValues(keyId, data));
     }
 
-    function displayValues(values) {
+    function displayValues(keyId, values) {
         var valuesContainer = document.getElementById('values-container');
         valuesContainer.innerHTML = ''; // Curăță conținutul anterior
 
+        // Setează atributul data-key-id pentru values-container
+        valuesContainer.setAttribute('data-key-id', keyId);
+
         values.forEach(function(value) {
             var valueDiv = document.createElement('div');
+            var valueId = value.id; // Obține id-ul valorii
+            valueDiv.dataset.valueId = valueId; // Adaugă id-ul ca atribut de date
+
             valueDiv.innerHTML = '<strong>Name:</strong> ' + value.name + '<br>' +
                                  '<strong>Type:</strong> ' + value.type + '<br>' +
                                  '<strong>Data:</strong> ' + value.data + '<br>';
             // Adăugăm butoanele de edit și delete în containerul de valori
-            valueDiv.innerHTML += '<button onclick="editValue(' + value.id + ')">Edit</button>';
-            valueDiv.innerHTML += '<button onclick="deleteValue(' + value.id + ')">Delete</button>';
+            valueDiv.innerHTML += '<button onclick="editValue(' + valueId + ')">Edit</button>';
+            valueDiv.innerHTML += '<button onclick="deleteValue(' + valueId + ')">Delete</button>';
             valueDiv.innerHTML += '<br><br>';
             valuesContainer.appendChild(valueDiv);
         });
@@ -88,6 +94,8 @@
         // Ascunde formularul de editare
         document.getElementById('edit-form').style.display = 'none';
     }
+
+
 
     // Funcționalitate pentru editarea unui nod din arbore
     function editNode(event, keyId) {
@@ -135,58 +143,60 @@
         }
     }
 
-     // Funcționalitate pentru editarea unei valori
-    function editValue(valueId, valueName, valueType, valueData) {
+    // Funcționalitate pentru editarea unei valori
+    function editValue(value) {
         // Afiseaza formularul de editare a valorii
         document.getElementById('edit-form').style.display = 'block';
 
         // Completeaza campurile din formular cu datele valorii existente
-        document.getElementById('edit-value-name').value = valueName;
-        document.getElementById('edit-value-type').value = valueType;
-        document.getElementById('edit-value-data').value = valueData;
+        document.getElementById('edit-value-id').value = value.id;
+        document.getElementById('edit-value-name').value = value.name;
+        document.getElementById('edit-value-type').value = value.type;
+        document.getElementById('edit-value-data').value = value.data;
 
         // Adauga event listener pentru formularul de editare
-        document.getElementById('edit-value-form').onsubmit = function(event) {
+        document.getElementById('edit-value-form').onsubmit = function (event) {
             event.preventDefault();
+            var id = document.getElementById('edit-value-id').value;
             var newName = document.getElementById('edit-value-name').value;
             var newType = document.getElementById('edit-value-type').value;
             var newData = document.getElementById('edit-value-data').value;
 
             // Trimite datele actualizate la server
-            fetch('/update_value/' + valueId, {
+            fetch('/update_value/' + id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ name: newName, type: newType, data: newData }),
             })
-            .then(response => response.json())
-            .then(result => {
-                alert(result.message);
-                // Reafișează valorile după actualizarea valorii
-                getValues(result.keyId);
-                // Ascunde formularul de editare
-                document.getElementById('edit-form').style.display = 'none';
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(result => {
+                    alert(result.message);
+                    // Reafișează valorile după actualizarea valorii
+                    getValues(result.keyId);
+                    // Ascunde formularul de editare
+                    document.getElementById('edit-form').style.display = 'none';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         };
     }
 
     // Funcționalitate pentru ștergerea unei valori
-    function deleteValue(valueId) {
+    function deleteValue(value) {
         var confirmDelete = confirm('Are you sure you want to delete this value?');
         if (confirmDelete) {
             // Trimite cererea de ștergere la server
-            fetch('/delete_value/' + valueId, {
+            fetch('/delete_value/' + value.id, {
                 method: 'DELETE',
             })
             .then(response => response.json())
             .then(result => {
                 alert(result.message);
-                // Reafișează valorile după ștergerea valorii
-                getValues(result.keyId);
+                // Elimină valorile după ștergerea valorii
+                document.querySelector(`[data-value-id="${value.id}"]`).remove();
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -194,30 +204,58 @@
         }
     }
 
+    // Funcționalitate pentru crearea unei valori noi
+    function createValue() {
+        var keyId = document.getElementById('values-container').getAttribute('data-key-id');
+        var newName = document.getElementById('new-value-name').value;
+        var newType = document.getElementById('new-value-type').value;
+        var newData = document.getElementById('new-value-data').value;
+
+        // Trimite datele pentru crearea valorii la server
+        fetch('/create_value/' + keyId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: newName, type: newType, data: newData }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(result.message);
+            // Reafișează valorile după adăugarea noii valori
+            getValues(keyId);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+
     // Funcționalitate pentru adăugarea unui copil pentru un nod din arbore
     function createChild(event, keyId) {
-        event.stopPropagation();
-        var childName = prompt('Enter the name for the new child node:');
-        if (childName !== null) {
-            // Trimite datele pentru crearea unui nou copil la server
-            fetch('/create_child/' + keyId, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: childName }),
-            })
-            .then(response => response.json())
-            .then(result => {
-                alert(result.message);
-                // Reafișează arborele după adăugarea noului copil
-                location.reload();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
+    event.stopPropagation();
+    var childName = prompt('Enter the name for the new child node:');
+    if (childName !== null) {
+        // Trimite datele pentru crearea unui nou copil la server
+        fetch('/create_key', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: childName, parent_key_id: keyId }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(result.message);
+            // Reafișează arborele după adăugarea noului copil
+            location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
+}
+
 </script>
 
 <!-- Partea dreaptă: Valorile asociate nodului selectat și formularul pentru crearea și editarea valorilor -->
@@ -236,11 +274,13 @@
         <label for="new-value-data">Data:</label>
         <input type="text" id="new-value-data">
 
-        <button onclick="submitNewValue()">Submit</button>
+        <button onclick="createValue()">Submit</button>
     </div>
     <div id="edit-form">
         Edit value:
         <form id="edit-value-form">
+            <input type="hidden" id="edit-value-id">
+
             <label for="edit-value-name">Name:</label>
             <input type="text" id="edit-value-name">
 
@@ -250,7 +290,7 @@
             <label for="edit-value-data">Data:</label>
             <input type="text" id="edit-value-data">
 
-            <button type="submit">Submit</button>
+            <button onclick="">Submit</button>
         </form>
     </div>
 </div>
