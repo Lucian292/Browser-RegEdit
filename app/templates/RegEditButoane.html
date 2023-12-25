@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listă de Elemente</title>
+    <style>
+        #output {
+            margin-top: 20px;
+        }
+        .element-container {
+            margin-bottom: 10px;
+        }
+        .element-buttons {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="afiseazaLista('fructe')">Afișează Fructe</button>
+    <button onclick="afiseazaLista('legume')">Afișează Legume</button>
+    <button onclick="ascundeLista()">Hide</button>
+
+    <div id="output"></div>
+
+    <script>
+        var listaAfisata = false;
+
+        function afiseazaLista(categorie) {
+            var lista = [];
+
+            // Adaugă elemente în funcție de categorie
+            if (categorie === 'fructe') {
+                lista = ['Măr', 'Păr', 'Banane', 'Portocale'];
+            } else if (categorie === 'legume') {
+                lista = ['Morcovi', 'Cartofi', 'Broccoli', 'Roșii'];
+            }
+
+            // Construiește lista de elemente
+            var listaHtml = '';
+            for (var i = 0; i < lista.length; i++) {
+                listaHtml += '<div class="element-container">';
+                listaHtml += '<span>' + lista[i] + '</span>';
+                listaHtml += '<div class="element-buttons">';
+                listaHtml += '<button onclick="editeazaElement(' + i + ')">Edit</button>';
+                listaHtml += '<button onclick="stergeElement(' + i + ')">Delete</button>';
+                listaHtml += '</div>';
+                listaHtml += '</div>';
+            }
+
+            // Adaugă butonul pentru a adăuga elemente noi
+            listaHtml += '<button onclick="adaugaElement()">Adaugă Element Nou</button>';
+
+            // Afișează lista în div-ul cu id-ul "output"
+            document.getElementById('output').innerHTML = listaHtml;
+
+            // Setează variabila listaAfisata la true
+            listaAfisata = true;
+
+            // Afiseaza butonul "Hide"
+            afiseazaButonAscunde();
+        }
+
+        function ascundeLista() {
+            // Ascunde lista
+            document.getElementById('output').innerHTML = '';
+
+            // Setează variabila listaAfisata la false
+            listaAfisata = false;
+
+            // Ascunde butonul "Hide"
+            ascundeButonAscunde();
+        }
+
+        function afiseazaButonAscunde() {
+            // Verifică dacă lista este afișată și afișează butonul "Hide" corespunzător
+            var buttonAscunde = document.querySelector('button[onclick="ascundeLista()"]');
+            if (buttonAscunde) {
+                buttonAscunde.style.display = listaAfisata ? 'inline-block' : 'none';
+            }
+        }
+
+        function ascundeButonAscunde() {
+            // Ascunde butonul "Hide"
+            var buttonAscunde = document.querySelector('button[onclick="ascundeLista()"]');
+            if (buttonAscunde) {
+                buttonAscunde.style.display = 'none';
+            }
+        }
+
+        function editeazaElement(index) {
+            // Implementează funcționalitatea de editare a elementului
+            console.log('Editează elementul cu indexul ' + index);
+        }
+
+        function stergeElement(index) {
+            // Implementează funcționalitatea de ștergere a elementului
+            console.log('Șterge elementul cu indexul ' + index);
+        }
+
+        function adaugaElement() {
+            // Implementează funcționalitatea de adăugare a unui element nou
+            console.log('Adaugă element nou');
+        }
+    </script>
+
+</body>
+</html>
