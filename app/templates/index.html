@@ -84,7 +84,7 @@
                                  '<strong>Type:</strong> ' + value.type + '<br>' +
                                  '<strong>Data:</strong> ' + value.data + '<br>';
             // Adăugăm butoanele de edit și delete în containerul de valori
-            valueDiv.innerHTML += '<button onclick="editValue(' + value.valueId + ')">Edit</button>';
+            valueDiv.innerHTML += '<button onclick="editValue(' + value.valueId + ', \'' + value.name + '\', \'' + value.type + '\', \'' + value.data + '\')">Edit</button>';
             valueDiv.innerHTML += '<button onclick="deleteValue(' + value.valueId + ')">Delete</button>';
             valueDiv.innerHTML += '<br><br>';
             valuesContainer.appendChild(valueDiv);
@@ -145,16 +145,15 @@
         }
     }
 
-    // Funcționalitate pentru editarea unei valori
-    function editValue(value) {
+    function editValue(valueId, name, type, data) {
         // Afiseaza formularul de editare a valorii
         document.getElementById('edit-form').style.display = 'block';
 
         // Completeaza campurile din formular cu datele valorii existente
-        document.getElementById('edit-value-id').value = value.id;
-        document.getElementById('edit-value-name').value = value.name;
-        document.getElementById('edit-value-type').value = value.type;
-        document.getElementById('edit-value-data').value = value.data;
+        document.getElementById('edit-value-id').value = valueId;
+        document.getElementById('edit-value-name').value = name;
+        document.getElementById('edit-value-type').value = type;
+        document.getElementById('edit-value-data').value = data;
 
         // Adauga event listener pentru formularul de editare
         document.getElementById('edit-value-form').onsubmit = function (event) {
