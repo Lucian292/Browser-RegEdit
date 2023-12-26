@@ -64,7 +64,7 @@
 
         #tree-container {
             max-height: 100vh; /* Înălțimea maximă va fi cel mult 100% din înălțimea vizibilă a ecranului */
-            max-width: 35%; /* Lățimea maximă va fi cel mult 100% din lățimea vizibilă a ecranului */
+            max-width: 37%; /* Lățimea maximă va fi cel mult 100% din lățimea vizibilă a ecranului */
             overflow-y: auto; /* Adaugă o bară de derulare verticală dacă arborele depășește înălțimea maximă */
             overflow-x: auto; /* Adaugă o bară de derulare orizontală dacă arborele depășește lățimea ecranului */
         }
