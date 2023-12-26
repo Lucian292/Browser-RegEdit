@@ -1,0 +1,102 @@
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        #create-form,
+        #edit-form {
+            margin-top: 20px;
+            background-color: #f2f2f2;
+            border-radius: 3px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        label{
+            display: inline-block;
+
+        }
+
+        input,select,button{
+            display: inline-block;
+            margin: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; /* Adaugă un spațiu între arbore și tabel */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #values {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 60%;
+            max-height: 100vh; /* înălțimea maximă va fi cel mult 100% din înălțimea vizibilă a ecranului */
+            overflow-y: auto; /* adaugă o bară de derulare verticală dacă conținutul depășește înălțimea maximă */
+            background-color: #f0f0f0; /* pentru claritate, puteți adăuga o culoare de fundal */
+            padding: 20px;
+        }
+
+        #tree-container {
+            max-height: 100vh; /* Înălțimea maximă va fi cel mult 100% din înălțimea vizibilă a ecranului */
+            max-width: 35%; /* Lățimea maximă va fi cel mult 100% din lățimea vizibilă a ecranului */
+            overflow-y: auto; /* Adaugă o bară de derulare verticală dacă arborele depășește înălțimea maximă */
+            overflow-x: auto; /* Adaugă o bară de derulare orizontală dacă arborele depășește lățimea ecranului */
+        }
+        .action-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+          }
+
+        .action-button img {
+            width: 16px; /* sau orice dimensiune dorită pentru icon */
+            height: 16px;
+            margin-right: 1px;
+        }
+
+        .folder-icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+        }
+
+        /* Stilizare pentru div-ul de căutare pentru Registry */
+        #search-registry-container {
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-bottom: 20px; /* Adaugat pentru o separare mai buna intre sectiuni */
+        }
+
+        /* Stilizare pentru div-ul de căutare pentru Values */
+        #search-values-container {
+            background-color: #f2f2f2;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; /* Adaugat pentru o separare mai buna intre sectiuni */
+        }

@@ -4,48 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tree View</title>
-    <style>
-        ul {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 5px;
-            cursor: pointer;
-        }
-
-        #create-form,
-        #edit-form {
-            margin-top: 20px;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="../../static/style.css">
 </head>
 <body>
 
-{% macro render_tree(node) %}
-    <ul>
-        <li data-key-id="{{ node.key_id }}" onclick="toggleNode(event, this)">
-            {{ node.key_name }}
-            <button onclick="editNode(event, {{ node.key_id }}, {{ node.parent_key_id }})">Edit</button>
-            <button onclick="deleteNode(event, {{ node.key_id }})">Delete</button>
-            <button onclick="createChild(event, {{ node.key_id }})">Create Child</button>
-            {% if node.children %}
-                <ul style="display:none;">
-                    {% for child in node.children %}
-                        {{ render_tree(child) }}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </li>
-    </ul>
-{% endmacro %}
+<div id="search-registry-container">
+    <label for="search-input" >Search Registry:</label>
+    <input type="text" id="search-input" oninput="searchRegistry()">
+</div>
 
-{% for root_key in keys %}
-    {{ render_tree(root_key) }}
-{% endfor %}
+<div id="tree-container">
+    {% macro render_tree(node) %}
+        <ul>
+            <li data-key-id="{{ node.key_id }}" onclick="toggleNode(event, this)">
+                <img src="../../static/images/folder-icon.png" alt="Folder" class="folder-icon">
+                {{ node.key_name }}
+                <button class="action-button" onclick="createChild(event, {{ node.key_id }})">
+                    <img src="../../static/images/create-child-icon.jpg" alt="Create Child">
+                </button>
+                <button class="action-button" onclick="editNode(event, {{ node.key_id }}, {{ node.parent_key_id }})">
+                    <img src="../../static/images/edit-icon.png" alt="Edit">
+                </button>
+                <button class="action-button" onclick="deleteNode(event, {{ node.key_id }})">
+                    <img src="../../static/images/delete-icon.png" alt="Delete">
+                </button>
+                {% if node.children %}
+                    <ul style="display:none;">
+                        {% for child in node.children %}
+                            {{ render_tree(child) }}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        </ul>
+    {% endmacro %}
+
+    {% for root_key in keys %}
+        {{ render_tree(root_key) }}
+    {% endfor %}
+</div>
+
+
+
 
 <script>
     function toggleNode(event, node) {
@@ -62,8 +62,6 @@
         }
     }
 
-
-
     function getValues(keyId) {
         // Folosește AJAX pentru a obține valorile asociate unui nod
         fetch('/get_values/' + keyId)
@@ -78,27 +76,48 @@
         // Setează atributul data-key-id pentru values-container
         valuesContainer.setAttribute('data-key-id', keyId);
 
-        values.forEach(function(value) {
-            var valueDiv = document.createElement('div');
-            // Adaugă atributul de date pentru valueId (nu va fi vizibil în pagină)
-            valueDiv.dataset.valueId = value.valueId;
+        // Crează tabelul
+        var table = document.createElement('table');
+        table.border = '1';
 
-            // Adaugă id-ul într-un atribut invizibil pentru a fi folosit în funcțiile delete și edit
-            valueDiv.innerHTML = '<strong>Name:</strong> ' + value.name + '<br>' +
-                                 '<strong>Type:</strong> ' + value.type + '<br>' +
-                                 '<strong>Data:</strong> ' + value.data + '<br>';
-            // Adăugăm butoanele de edit și delete în containerul de valori
-            valueDiv.innerHTML += '<button onclick="editValue(' + value.valueId + ', \'' + value.name + '\', \'' + value.type + '\', \'' + value.data + '\')">Edit</button>';
-            valueDiv.innerHTML += '<button onclick="deleteValue(' + value.valueId + ')">Delete</button>';
-            valueDiv.innerHTML += '<br><br>';
-            valuesContainer.appendChild(valueDiv);
+        // Crează antetele tabelului
+        var thead = document.createElement('thead');
+        var headerRow = document.createElement('tr');
+        var headers = ['Name', 'Type', 'Data', 'Actions'];
+
+        headers.forEach(function(headerText) {
+            var th = document.createElement('th');
+            th.appendChild(document.createTextNode(headerText));
+            headerRow.appendChild(th);
         });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Adaugă rânduri pentru fiecare valoare
+        var tbody = document.createElement('tbody');
+        values.forEach(function(value) {
+            var tr = document.createElement('tr');
+
+            // Adaugă celule cu datele valorii
+            tr.innerHTML = '<td>' + value.name + '</td>' +
+                           '<td>' + value.type + '</td>' +
+                           '<td>' + value.data + '</td>' +
+                           '<td><button onclick="editValue(' + value.valueId + ', \'' + value.name + '\', \'' + value.type + '\', \'' + value.data + '\')">Edit</button>' +
+                           '<button onclick="deleteValue(' + value.valueId + ')">Delete</button></td>';
+
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        valuesContainer.appendChild(table);
 
         // Afișează formularul de creare a noii valori
         document.getElementById('create-form').style.display = 'block';
         // Ascunde formularul de editare
         document.getElementById('edit-form').style.display = 'none';
     }
+
 
     function editNode(event, keyId, parentKeyId) {
         event.stopPropagation();
@@ -298,19 +317,14 @@
 
 </script>
 
-<div style="margin-top: 20px;">
-    <label for="search-input">Search Registry:</label>
-    <input type="text" id="search-input" oninput="searchRegistry()">
-</div>
 
-<div>
-    <!-- Bara de căutare pentru valori -->
-    <label for="search-values-input">Search Values:</label>
-    <input type="text" id="search-values-input" oninput="searchValues()">
-</div>
 
 <!-- Partea dreaptă: Valorile asociate nodului selectat și formularul pentru crearea și editarea valorilor -->
-<div style="float: left; width: 70%;">
+<div style="float: right; width: 70%;" id="values">
+    <div id="search-values-container">
+        <label for="search-values-input">Search Values:</label>
+        <input type="text" id="search-values-input" oninput="searchValues()">
+    </div>
     <div id="values-container">
         <!-- Valorile vor fi afișate aici -->
     </div>
@@ -337,8 +351,8 @@
         <button onclick="createValue()">Submit</button>
     </div>
     <div id="edit-form">
-        Edit value:
         <form id="edit-value-form">
+            Edit value:
             <input type="hidden" id="edit-value-id">
 
             <label for="edit-value-name">Name:</label>

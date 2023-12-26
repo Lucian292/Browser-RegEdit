@@ -7,6 +7,7 @@ from config import basedir
 
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(basedir, 'config.py'))
+app.static_folder = os.path.join(basedir, 'static')
 db = SQLAlchemy(app)
 
 from app import routes, models, validators

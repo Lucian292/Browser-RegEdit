@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="44cfd4d2-58a8-4d18-b6ee-73eb30e332ec" name="Changes" comment="rezolvat un bug">
+      <change afterPath="$PROJECT_DIR$/static/images/create-child-icon.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/delete-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/edit-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/folder-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2Zw1j2BKqS2xUQVNo9LwR3oR8vR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python.__init__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.database_operations.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/Flask-Web-App-Tutorial-main&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Universitate\Python\proiect\Browser-RegEdit\app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Universitate\Python\proiect\Browser-RegEdit\static\images" />
+      <recent name="D:\Universitate\Python\proiect\Browser-RegEdit\static" />
+      <recent name="D:\Universitate\Python\proiect\Browser-RegEdit\app\templates\images" />
+      <recent name="D:\Universitate\Python\proiect\Browser-RegEdit\app\templates" />
+      <recent name="D:\Universitate\Python\proiect\Browser-RegEdit\app\templates\css" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Browser-RegEdit" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.__init__" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="44cfd4d2-58a8-4d18-b6ee-73eb30e332ec" name="Changes" comment="" />
+      <created>1703318458906</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703318458906</updated>
+      <workItem from="1703318465969" duration="525000" />
+      <workItem from="1703319021152" duration="3445000" />
+      <workItem from="1703407221092" duration="360000" />
+      <workItem from="1703407825099" duration="366000" />
+      <workItem from="1703408211766" duration="2696000" />
+      <workItem from="1703410955999" duration="49438000" />
+      <workItem from="1703574399617" duration="12487000" />
+    </task>
+    <task id="LOCAL-00001" summary="initial create">
+      <option name="closed" value="true" />
+      <created>1703322472769</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703322472769</updated>
+    </task>
+    <task id="LOCAL-00002" summary="afisez in pagina arborele cu chei si valorile registrilor la click pe un nod frunza">
+      <option name="closed" value="true" />
+      <created>1703442064310</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703442064310</updated>
+    </task>
+    <task id="LOCAL-00003" summary="finalizat get din baza de date si trimis spre frontend">
+      <option name="closed" value="true" />
+      <created>1703497895518</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1703497895518</updated>
+    </task>
+    <task id="LOCAL-00004" summary="adaugat butoanele la toate elementele">
+      <option name="closed" value="true" />
+      <created>1703502804174</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1703502804174</updated>
+    </task>
+    <task id="LOCAL-00005" summary="functionalitate la butoanele de la chei si creare de registru nou">
+      <option name="closed" value="true" />
+      <created>1703507695583</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703507695583</updated>
+    </task>
+    <task id="LOCAL-00006" summary="functioneaza butonul delete la value">
+      <option name="closed" value="true" />
+      <created>1703509544197</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1703509544197</updated>
+    </task>
+    <task id="LOCAL-00007" summary="functionalitatea butonului edit la values">
+      <option name="closed" value="true" />
+      <created>1703512985926</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1703512985926</updated>
+    </task>
+    <task id="LOCAL-00008" summary="facut curat prin fisiere">
+      <option name="closed" value="true" />
+      <created>1703513857829</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1703513857829</updated>
+    </task>
+    <task id="LOCAL-00009" summary="implementat verificarile pentru valori si nume la chei si registri">
+      <option name="closed" value="true" />
+      <created>1703518763525</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1703518763525</updated>
+    </task>
+    <task id="LOCAL-00010" summary="search pentru registru si pentru valoare">
+      <option name="closed" value="true" />
+      <created>1703577371839</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1703577371839</updated>
+    </task>
+    <task id="LOCAL-00011" summary="rezolvat un bug">
+      <option name="closed" value="true" />
+      <created>1703580017669</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1703580017669</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial create" />
+    <MESSAGE value="afisez in pagina arborele cu chei si valorile registrilor la click pe un nod frunza" />
+    <MESSAGE value="finalizat get din baza de date si trimis spre frontend" />
+    <MESSAGE value="adaugat butoanele la toate elementele" />
+    <MESSAGE value="functionalitate la butoanele de la chei si creare de registru nou" />
+    <MESSAGE value="functioneaza butonul delete la value" />
+    <MESSAGE value="functionalitatea butonului edit la values" />
+    <MESSAGE value="facut curat prin fisiere" />
+    <MESSAGE value="implementat verificarile pentru valori si nume la chei si registri" />
+    <MESSAGE value="search pentru registru si pentru valoare" />
+    <MESSAGE value="rezolvat un bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="rezolvat un bug" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Browser_RegEdit$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1703416298722" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
+    <SUITE FILE_PATH="coverage/Browser_RegEdit$database_operations.coverage" NAME="database_operations Coverage Results" MODIFIED="1703414167937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
+  </component>
+</project>
