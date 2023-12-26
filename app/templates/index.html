@@ -19,6 +19,8 @@
         #edit-form {
             margin-top: 20px;
         }
+
+
     </style>
 </head>
 <body>
@@ -49,8 +51,6 @@
     function toggleNode(event, node) {
         var childUl = node.querySelector('ul');
         var keyId = node.getAttribute('data-key-id');
-        //var parentKeyId = node.parentNode.parentNode.getAttribute('data-key-id'); // Adaugă această linie pentru a obține ID-ul nodului părinte
-
 
         if (childUl) {
             childUl.style.display = (childUl.style.display === 'none') ? 'block' : 'none';
@@ -61,6 +61,8 @@
             event.stopPropagation();
         }
     }
+
+
 
     function getValues(keyId) {
         // Folosește AJAX pentru a obține valorile asociate unui nod
@@ -98,10 +100,6 @@
         document.getElementById('edit-form').style.display = 'none';
     }
 
-
-
-
-    // Funcționalitate pentru editarea unui nod din arbore
     function editNode(event, keyId, parentKeyId) {
         event.stopPropagation();
         var nodeName = prompt('Enter the new name for the node:');
@@ -126,8 +124,6 @@
         }
     }
 
-
-    // Funcționalitate pentru ștergerea unui nod din arbore
     function deleteNode(event, keyId) {
         event.stopPropagation();
         var confirmDelete = confirm('Are you sure you want to delete this node and its children?');
@@ -188,7 +184,6 @@
         };
     }
 
-    // Funcționalitate pentru ștergerea unei valori
     function deleteValue(valueId) {
         var confirmDelete = confirm('Are you sure you want to delete this value?');
         if (confirmDelete) {
@@ -208,8 +203,6 @@
         }
     }
 
-
-    // Funcționalitate pentru crearea unei valori noi
     function createValue() {
         var keyId = document.getElementById('values-container').getAttribute('data-key-id');
         var newName = document.getElementById('new-value-name').value;
@@ -235,31 +228,29 @@
         });
     }
 
-
-    // Funcționalitate pentru adăugarea unui copil pentru un nod din arbore
     function createChild(event, keyId) {
-    event.stopPropagation();
-    var childName = prompt('Enter the name for the new child node:');
-    if (childName !== null) {
-        // Trimite datele pentru crearea unui nou copil la server
-        fetch('/create_key', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: childName, parent_key_id: keyId }),
-        })
-        .then(response => response.json())
-        .then(result => {
-            alert(result.message);
-            // Reafișează arborele după adăugarea noului copil
-            location.reload();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        event.stopPropagation();
+        var childName = prompt('Enter the name for the new child node:');
+        if (childName !== null) {
+            // Trimite datele pentru crearea unui nou copil la server
+            fetch('/create_key', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: childName, parent_key_id: keyId }),
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert(result.message);
+                // Reafișează arborele după adăugarea noului copil
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
     }
-}
 
     function searchRegistry() {
         var searchInput = document.getElementById('search-input').value.toLowerCase();
