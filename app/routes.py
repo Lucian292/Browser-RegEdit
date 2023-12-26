@@ -199,3 +199,15 @@ def delete_value(value_id):
         return jsonify({'message': 'Value deleted successfully', 'keyId': value_to_delete.key_id}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
+
+@app.route('/get_all_values', methods=['GET'])
+def get_all_values():
+    values = Values.query.all()
+    values_data = [{
+        'name': value.value_name,
+        'type': value.value_type,
+        'data': value.value_data,
+        'valueId': value.value_id,
+        'keyId': value.key_id
+    } for value in values]
+    return jsonify(values_data)

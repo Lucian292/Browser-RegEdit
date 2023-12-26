@@ -261,7 +261,62 @@
     }
 }
 
+    function searchRegistry() {
+        var searchInput = document.getElementById('search-input').value.toLowerCase();
+        var treeNodes = document.querySelectorAll('[data-key-id]');
+        var valuesContainer = document.getElementById('values-container');
+
+        treeNodes.forEach(function(node) {
+            var nodeName = node.textContent.toLowerCase();
+            var displayStyle = nodeName.includes(searchInput) ? 'block' : 'none';
+            node.style.display = displayStyle;
+        });
+
+        // Afisează sau ascunde lista de valori în funcție de rezultatul căutării
+        var displayValues = searchInput === '' ? 'none' : 'block';
+        valuesContainer.style.display = displayValues;
+
+        // Dacă căutarea este goală, reafișează toate nodurile
+        if (searchInput === '') {
+            treeNodes.forEach(function(node) {
+                node.style.display = 'block';
+            });
+        }
+    }
+
+    function searchValues() {
+        var searchValuesInput = document.getElementById('search-values-input').value.toLowerCase();
+        var valuesContainer = document.getElementById('values-container');
+
+        // Verifică dacă bara de căutare a valorilor este goală
+        if (searchValuesInput.trim() === '') {
+            // Dacă este goală, curăță containerul de valori și ascunde formularul de editare
+            valuesContainer.innerHTML = '';
+            document.getElementById('edit-form').style.display = 'none';
+            return;
+        }
+
+        // Dacă nu este goală, folosește AJAX pentru a obține toate valorile
+        fetch('/get_all_values')
+            .then(response => response.json())
+            .then(data => {
+                var values = data.filter(value => value.name.toLowerCase().includes(searchValuesInput));
+                displayValues(valuesContainer.getAttribute('data-key-id'), values);
+            });
+    }
+
 </script>
+
+<div style="margin-top: 20px;">
+    <label for="search-input">Search Registry:</label>
+    <input type="text" id="search-input" oninput="searchRegistry()">
+</div>
+
+<div>
+    <!-- Bara de căutare pentru valori -->
+    <label for="search-values-input">Search Values:</label>
+    <input type="text" id="search-values-input" oninput="searchValues()">
+</div>
 
 <!-- Partea dreaptă: Valorile asociate nodului selectat și formularul pentru crearea și editarea valorilor -->
 <div style="float: left; width: 70%;">
