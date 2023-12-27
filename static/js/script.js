@@ -147,11 +147,17 @@
             })
                 .then(response => response.json())
                 .then(result => {
-                    alert('Error: ' + result.error);
-                    // Reafișează valorile după actualizarea valorii
-                    getValues(result.keyId);
-                    // Ascunde formularul de editare
-                    document.getElementById('edit-form').style.display = 'none';
+                    if (result.error) {
+                        // Afișează mesajul de eroare în loc să folosești alert
+                        alert('Error: ' + result.error);
+                    } else {
+                        // Afișează mesajul de succes sau altă acțiune dorită
+                        alert(result.message);
+                        // Reafișează valorile după actualizarea valorii
+                        getValues(result.keyId);
+                        // Ascunde formularul de editare
+                        document.getElementById('edit-form').style.display = 'none';
+                    }
                 })
                 .catch((error) => {
                     console.error('Error:', error);
