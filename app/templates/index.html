@@ -45,14 +45,13 @@
     {% endfor %}
 </div>
 
-<!-- Partea dreaptă: Valorile asociate nodului selectat și formularul pentru crearea și editarea valorilor -->
 <div style="float: right; width: 60%;" id="values">
     <div id="search-values-container">
         <label for="search-values-input">Search Values:</label>
         <input type="text" id="search-values-input" oninput="searchValues()">
     </div>
     <div id="values-container">
-        <!-- Valorile vor fi afișate aici -->
+        <!-- Valorile vor fi afisate aici -->
     </div>
     <div id="create-form">
         Create new value:
@@ -61,14 +60,12 @@
 
         <label for="new-value-type">Type:</label>
         <select id="new-value-type">
-            <!-- Adăugați opțiunile aici, folosind o buclă sau manual -->
             <option value="REG_BINARY">REG_BINARY</option>
             <option value="REG_DWORD">REG_DWORD</option>
             <option value="REG_QWORD">REG_QWORD</option>
             <option value="REG_EXPAND_SZ">REG_EXPAND_SZ</option>
             <option value="REG_MULTI_SZ">REG_MULTI_SZ</option>
             <option value="REG_SZ">REG_SZ</option>
-            <!-- Adăugați altele după nevoie -->
         </select>
 
         <label for="new-value-data">Data:</label>
@@ -86,14 +83,12 @@
 
             <label for="edit-value-type">Type:</label>
             <select id="edit-value-type">
-                <!-- Adăugați opțiunile aici, folosind o buclă sau manual -->
                 <option value="REG_BINARY">REG_BINARY</option>
                 <option value="REG_DWORD">REG_DWORD</option>
                 <option value="REG_QWORD">REG_QWORD</option>
                 <option value="REG_EXPAND_SZ">REG_EXPAND_SZ</option>
                 <option value="REG_MULTI_SZ">REG_MULTI_SZ</option>
                 <option value="REG_SZ">REG_SZ</option>
-                <!-- Adăugați altele după nevoie -->
             </select>
 
             <label for="edit-value-data">Data:</label>

@@ -38,7 +38,7 @@
         table {
             border-collapse: collapse;
             width: 100%;
-            margin-top: 20px; /* Adaugă un spațiu între arbore și tabel */
+            margin-top: 20px;
         }
 
         th, td {
@@ -56,17 +56,17 @@
             top: 0;
             right: 0;
             width: 60%;
-            max-height: 100vh; /* înălțimea maximă va fi cel mult 100% din înălțimea vizibilă a ecranului */
-            overflow-y: auto; /* adaugă o bară de derulare verticală dacă conținutul depășește înălțimea maximă */
-            background-color: #f0f0f0; /* pentru claritate, puteți adăuga o culoare de fundal */
+            max-height: 100vh;
+            overflow-y: auto;
+            background-color: #f0f0f0;
             padding: 20px;
         }
 
         #tree-container {
-            max-height: 100vh; /* Înălțimea maximă va fi cel mult 100% din înălțimea vizibilă a ecranului */
-            max-width: 37%; /* Lățimea maximă va fi cel mult 100% din lățimea vizibilă a ecranului */
-            overflow-y: auto; /* Adaugă o bară de derulare verticală dacă arborele depășește înălțimea maximă */
-            overflow-x: auto; /* Adaugă o bară de derulare orizontală dacă arborele depășește lățimea ecranului */
+            max-height: 100vh;
+            max-width: 37%;
+            overflow-y: auto;
+            overflow-x: auto;
         }
         .action-button {
             background: none;
@@ -75,7 +75,7 @@
           }
 
         .action-button img {
-            width: 16px; /* sau orice dimensiune dorită pentru icon */
+            width: 16px;
             height: 16px;
             margin-right: 1px;
         }
@@ -86,17 +86,15 @@
             margin-right: 5px;
         }
 
-        /* Stilizare pentru div-ul de căutare pentru Registry */
         #search-registry-container {
             margin-top: 20px;
             margin-left: 20px;
-            margin-bottom: 20px; /* Adaugat pentru o separare mai buna intre sectiuni */
+            margin-bottom: 20px;
         }
 
-        /* Stilizare pentru div-ul de căutare pentru Values */
         #search-values-container {
             background-color: #f2f2f2;
             border-radius: 8px;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px; /* Adaugat pentru o separare mai buna intre sectiuni */
+            margin-bottom: 20px;
         }

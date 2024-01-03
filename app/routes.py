@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError
 
 
 def get_keys_recursively(parent_key):
-    """Funcție recursivă pentru a obține toate cheile și subcheilele în format JSON."""
     keys = []
     for key in parent_key:
         key_data = {
@@ -32,17 +31,16 @@ def index():
 
     for root_key in root_keys:
         root_key.children = get_children_recursive(root_key)
-    # Afișare în consolă pentru a verifica conținutul
+    """afisare in consola pentru a verifica continutul"""
     for root_key in root_keys:
         print(f"- {root_key.key_name}")
         for child_key in root_key.children:
-            print_children_recursive(child_key, indent=1)  # Adăugat o funcție de afișare recursivă
+            print_children_recursive(child_key, indent=1)
 
     return render_template('index.html', keys=root_keys)
 
 
 def print_children_recursive(key, indent=0):
-    """Funcție pentru a afișa cheile și subcheilele în mod recursiv."""
     print(f"{'  ' * indent}- {key.key_name}")
     for child_key in key.children:
         print_children_recursive(child_key, indent + 1)
@@ -59,72 +57,56 @@ def get_values(key_id):
         'type': value.value_type,
         'data': value.value_data,
         'valueId': value.value_id} for value in values]
-    # print("sa efectuat get_values cu id-ul ", {key_id}, "s-au returnat valorile ", values_data)
     return jsonify(values_data)
 
 
 @app.route('/create_key', methods=['POST'])
 def create_key():
     if request.method == 'POST':
-        # Obține datele din request
         data = request.get_json()
         key_name = data.get('name')
-        parent_key_id = data.get('parent_key_id')  # Asigură-te că adaugi și în request parametrul pentru părinte
+        parent_key_id = data.get('parent_key_id')
 
-        # Verifică dacă numele cheii este unic în cadrul aceluiași părinte
         if not is_unique_key_name(key_name, parent_key_id):
             return jsonify({'error': 'Key name must be unique within the same parent key'}), 400
 
-        # Creează o nouă cheie
         new_key = Keys(key_name=key_name, parent_key_id=parent_key_id)
 
-        # Adaugă cheia în baza de date
         db.session.add(new_key)
         db.session.commit()
 
-        # Returnează un răspuns JSON
         return jsonify({'message': 'Key created successfully', 'key_id': new_key.key_id})
 
 
 @app.route('/update_node/<int:key_id>', methods=['POST'])
 def update_key(key_id):
     if request.method == 'POST':
-        # Obține datele din request
         data = request.get_json()
         new_name = data.get('name')
         parent_key_id = data.get('parent_key_id')
 
-        # Găsește cheia în baza de date după ID
         key_to_update = Keys.query.get_or_404(key_id)
 
-        # Verifică dacă numele cheii este unic în cadrul aceluiași părinte
         if not is_unique_key_name(new_name, parent_key_id):
             return jsonify({'error': 'Key name must be unique within the same parent key'}), 400
 
-        # Actualizează numele cheii
         key_to_update.key_name = new_name
 
-        # Salvează schimbările în baza de date
         db.session.commit()
 
-        # Returnează un răspuns JSON
         return jsonify({'message': 'Key updated successfully'})
 
 
 @app.route('/delete_node/<int:key_id>', methods=['DELETE'])
 def delete_key(key_id):
-    # Găsește cheia în baza de date după ID
     key_to_delete = Keys.query.get_or_404(key_id)
 
-    # Șterge cheia și relațiile sale cu valorile asociate
     db.session.delete(key_to_delete)
     db.session.commit()
 
-    # Returnează un răspuns JSON
     return jsonify({'message': 'Key and associated values deleted successfully'})
 
 
-# Ruta pentru crearea unei noi valori
 @app.route('/create_value/<int:key_id>', methods=['POST'])
 def create_value(key_id):
     try:
@@ -133,30 +115,25 @@ def create_value(key_id):
         value_type = data['type']
         value_data = data['data']
 
-        # Verifică dacă datele sunt valide
         if not validate_data_type(value_type, value_data):
             return jsonify({'error': 'Invalid data type for the specified value type'}), 400
 
-        # Verifică dacă există deja o valoare cu același nume în cadrul aceluiași nod
         existing_value = Values.query.filter_by(key_id=key_id, value_name=value_name).first()
         if existing_value:
             return jsonify({'error': 'Value with the same name already exists for this key'}), 400
 
-        # Crează o nouă valoare pentru nodul specificat
         new_value = Values(value_name=value_name, value_type=value_type, value_data=value_data, key_id=key_id)
         db.session.add(new_value)
         db.session.commit()
 
         return jsonify({'message': 'Value created successfully'}), 200
     except IntegrityError:
-        # Capturarea unei erori de integritate, care apare atunci când există deja o valoare cu același nume
         db.session.rollback()
         return jsonify({'error': 'Value with the same name already exists for this key'}), 400
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
 
 
-# Ruta pentru editarea unei valori
 @app.route('/update_value/<int:value_id>', methods=['PUT'])
 def update_value(value_id):
     try:
@@ -165,14 +142,11 @@ def update_value(value_id):
         new_type = data['type']
         new_data = data['data']
 
-        # Verifică dacă datele sunt valide
         if not validate_data_type(new_type, new_data):
             return jsonify({'error': 'Invalid data type for the specified value type'}), 400
 
-        # Găsește valoarea și actualizează informațiile
         value_to_update = Values.query.get(value_id)
 
-        # Verifică dacă există deja o altă valoare cu același nume în cadrul aceluiași nod
         existing_value = Values.query.filter_by(key_id=value_to_update.key_id, value_name=new_name).first()
         if existing_value and existing_value.value_id != value_to_update.value_id:
             return jsonify({'error': 'Value with the same name already exists for this key'}), 400
@@ -187,11 +161,9 @@ def update_value(value_id):
         return jsonify({'message': f'Error: {str(e)}'}), 500
 
 
-# Ruta pentru ștergerea unei valori
 @app.route('/delete_value/<int:value_id>', methods=['DELETE'])
 def delete_value(value_id):
     try:
-        # Găsește valoarea și o șterge
         value_to_delete = Values.query.get(value_id)
         db.session.delete(value_to_delete)
         db.session.commit()

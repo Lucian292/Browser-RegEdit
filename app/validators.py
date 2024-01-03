@@ -4,6 +4,7 @@ from app.models import Keys
 
 
 def validate_data_type(value_type, value_data):
+    """Verifică dacă tipul de date și valoarea sunt compatibile"""
     try:
         if value_type == "REG_BINARY":
             if not re.match(r'^[0-1]+$', value_data):
@@ -36,6 +37,6 @@ def validate_data_type(value_type, value_data):
         return False
 
 def is_unique_key_name(key_name, parent_key_id):
-    # Verifică dacă există deja o cheie cu același nume în cadrul aceluiași părinte
+    """Verifică dacă există deja o cheie cu același nume în cadrul aceluiași părinte"""
     existing_key = Keys.query.filter_by(key_name=key_name, parent_key_id=parent_key_id).first()
     return existing_key is None

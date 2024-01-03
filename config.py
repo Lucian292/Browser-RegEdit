@@ -7,7 +7,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:1234@localhost:5432/RegEdit'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-# Verificare conexiune la baza de date
 try:
     engine = create_engine(SQLALCHEMY_DATABASE_URI)
     engine.connect()
